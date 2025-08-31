@@ -1,11 +1,15 @@
 import os
-print("USING DB:", os.path.abspath("bootcamp.db"))
 import sqlite3
 import matplotlib.pyplot as plt
 
-# Connect to your bootcamp database
-conn = sqlite3.connect("bootcamp.db")  # use relative path if .py file is in same folder
+# Always use the DB that sits next to this .py file
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(SCRIPT_DIR, "bootcamp.db")
+print("USING DB:", DB_PATH)
+
+conn = sqlite3.connect(DB_PATH)
 cur = conn.cursor()
+
 
 # SQL query: average completion % per week
 cur.execute("""
@@ -103,4 +107,5 @@ ax.set_ylabel("Avg Progress %")
 fig.savefig("progress_report.png", dpi=150, bbox_inches="tight")
 fig.savefig("progress_report.pdf", dpi=150, bbox_inches="tight")
 plt.show()
+
 
